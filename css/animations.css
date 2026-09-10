@@ -1,90 +1,139 @@
 /* ==========================================================================
-   RAINBOW.ME - Micro-Interactions, Staggers, Market Word Ticker & Keyframes
+   ORBITAL VAULT — Animations & Keyframes
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   1. Word-by-Word Text Stagger Entrance
-   -------------------------------------------------------------------------- */
+/* ─── Word stagger entrance ──────────────────────────────────────────────── */
 .t-word {
   display: inline-block;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s var(--ease-apple), transform 0.6s var(--ease-apple);
-  transition-delay: calc(var(--wi, 0) * 0.08s);
+  transform: translateY(22px) rotateX(-20deg);
+  transform-origin: bottom center;
+  transition:
+    opacity 0.65s var(--ease-out-expo),
+    transform 0.65s var(--ease-out-expo);
+  transition-delay: calc(var(--wi, 0) * 0.075s + 0.1s);
 }
 
 .t-stagger.is-shown .t-word {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) rotateX(0);
 }
 
-.t-stagger-line {
+.t-line { display: block; overflow: visible; }
+
+.t-sub {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.8s var(--ease-apple), transform 0.8s var(--ease-apple);
+  transform: translateY(14px);
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+  transition-delay: 0.55s;
 }
-
-.t-stagger.is-shown .t-stagger-line--2 {
+.t-stagger.is-shown .t-sub {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: 0.5s;
 }
 
-/* --------------------------------------------------------------------------
-   2. Dynamic Market Word Rotation Animation
-   -------------------------------------------------------------------------- */
-.market-word_item {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 800;
-  animation: marketFlip 0.5s var(--ease-apple);
-}
-
-@keyframes marketFlip {
-  0% {
-    opacity: 0;
-    transform: translateY(12px) rotateX(-40deg);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) rotateX(0deg);
-  }
-}
-
-/* --------------------------------------------------------------------------
-   3. Tile Shimmer & Glare Effects
-   -------------------------------------------------------------------------- */
-@keyframes rainbowGlow {
-  0%, 100% {
-    filter: drop-shadow(0 0 15px rgba(255, 59, 48, 0.4));
-  }
-  25% {
-    filter: drop-shadow(0 0 15px rgba(255, 204, 0, 0.4));
-  }
-  50% {
-    filter: drop-shadow(0 0 15px rgba(52, 199, 89, 0.4));
-  }
-  75% {
-    filter: drop-shadow(0 0 15px rgba(0, 122, 255, 0.4));
-  }
-}
-
-.rainbow-glow {
-  animation: rainbowGlow 6s infinite ease-in-out;
-}
-
-/* --------------------------------------------------------------------------
-   4. Scroll Reveal
-   -------------------------------------------------------------------------- */
-.reveal-on-scroll {
+.t-cta {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.75s var(--ease-apple), transform 0.75s var(--ease-apple);
+  transform: translateY(12px);
+  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+  transition-delay: 0.72s;
+}
+.t-stagger.is-shown .t-cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Market word flip ────────────────────────────────────────────────────── */
+.market-word {
+  display: inline-block;
+  color: var(--green);
+  transition: opacity 0.22s ease, transform 0.22s ease;
   will-change: opacity, transform;
 }
 
-.reveal-on-scroll.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
+.market-word-inner {
+  display: inline-flex;
+  align-items: center;
+  animation: wordFlip 0.48s var(--ease-out-expo) both;
+}
+
+@keyframes wordFlip {
+  0%   { opacity: 0; transform: translateY(14px) rotateX(-30deg); }
+  100% { opacity: 1; transform: translateY(0)    rotateX(0deg); }
+}
+
+/* ─── Scroll reveal ──────────────────────────────────────────────────────── */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed { opacity: 1; transform: none; }
+
+/* Staggered delay helpers */
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+
+/* ─── Floating phone entrance ────────────────────────────────────────────── */
+@keyframes phoneFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* ─── Rainbow shimmer on logo ────────────────────────────────────────────── */
+@keyframes rainbowCycle {
+  0%   { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+/* ─── Aurora wave ────────────────────────────────────────────────────────── */
+@keyframes auroraShift {
+  0%, 100% { opacity: 0.7; }
+  50%       { opacity: 1; }
+}
+
+/* ─── Glow pulse ─────────────────────────────────────────────────────────── */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(0,217,90,0.2); }
+  50%       { box-shadow: 0 0 40px rgba(0,217,90,0.5); }
+}
+
+/* ─── Ticker tape scroll ─────────────────────────────────────────────────── */
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ─── Spin ───────────────────────────────────────────────────────────────── */
+@keyframes spinY {
+  0%   { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+/* ─── Toast pop-in ───────────────────────────────────────────────────────── */
+@keyframes toastIn {
+  0%   { opacity: 0; transform: translateY(12px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ─── Shimmer sweep ──────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.shimmer-effect {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-effect::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.06) 50%, transparent 60%);
+  animation: shimmer 3.5s ease-in-out infinite;
 }
