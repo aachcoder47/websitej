@@ -1,6 +1,6 @@
 /**
  * ORBITAL VAULT - Main Application Controller
- * High-performance state management, 5-slice quantum aperture transition, interactive simulators, wallet integration, and Robinhood Chain execution
+ * High-performance state management, 5-slice quantum aperture transition, mobile drawer, interactive simulators, wallet integration, and Robinhood Chain execution
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -69,37 +69,71 @@ document.addEventListener('DOMContentLoaded', () => {
     chartEngine = new DCAChartEngine('dca-chart-canvas');
   }
 
-  // 5. Cursor Glow Tracker & Dynamic 3D Card Tilt
+  // 5. Cursor Glow Tracker & Dynamic 3D Card Tilt (Disabled on touch devices for performance)
+  const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
   const cursorGlow = document.getElementById('cursor-glow');
-  window.addEventListener('mousemove', (e) => {
-    if (cursorGlow) {
-      cursorGlow.style.left = `${e.clientX}px`;
-      cursorGlow.style.top = `${e.clientY}px`;
-    }
 
-    document.querySelectorAll('.interactive-card').forEach((card) => {
-      const rect = card.getBoundingClientRect();
-      if (
-        e.clientX >= rect.left &&
-        e.clientX <= rect.right &&
-        e.clientY >= rect.top &&
-        e.clientY <= rect.bottom
-      ) {
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -4;
-        const rotateY = ((x - centerX) / centerX) * 4;
-
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-      } else {
-        card.style.transform = '';
+  if (!isTouch) {
+    window.addEventListener('mousemove', (e) => {
+      if (cursorGlow) {
+        cursorGlow.style.left = `${e.clientX}px`;
+        cursorGlow.style.top = `${e.clientY}px`;
       }
+
+      document.querySelectorAll('.interactive-card').forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        if (
+          e.clientX >= rect.left &&
+          e.clientX <= rect.right &&
+          e.clientY >= rect.top &&
+          e.clientY <= rect.bottom
+        ) {
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = ((y - centerY) / centerY) * -4;
+          const rotateY = ((x - centerX) / centerX) * 4;
+
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+        } else {
+          card.style.transform = '';
+        }
+      });
+    });
+  } else if (cursorGlow) {
+    cursorGlow.style.display = 'none';
+  }
+
+  // 6. Mobile Navigation Drawer Handlers
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileNavDrawer = document.getElementById('mobile-nav-drawer');
+  const mobileDrawerClose = document.getElementById('mobile-drawer-close');
+
+  if (mobileMenuToggle && mobileNavDrawer) {
+    mobileMenuToggle.addEventListener('click', () => {
+      if (window.soundEngine) window.soundEngine.playClick();
+      mobileNavDrawer.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  }
+
+  if (mobileDrawerClose && mobileNavDrawer) {
+    mobileDrawerClose.addEventListener('click', () => {
+      if (window.soundEngine) window.soundEngine.playClick();
+      mobileNavDrawer.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  }
+
+  document.querySelectorAll('.mobile-nav-link').forEach((link) => {
+    link.addEventListener('click', () => {
+      if (mobileNavDrawer) mobileNavDrawer.classList.remove('open');
+      document.body.style.overflow = '';
     });
   });
 
-  // 6. Scroll Header State & Section HUD Tracker Spy
+  // 7. Scroll Header State & Section HUD Tracker Spy
   const siteHeader = document.getElementById('site-header');
   const hudItems = document.querySelectorAll('.hud-dot-item');
   const sections = ['hero', 'simulator', 'vaults', 'tokenomics', 'infrastructure'];
@@ -111,7 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
       siteHeader.classList.remove('scrolled');
     }
 
-    // Scroll spy for left HUD
     const scrollPos = window.scrollY + window.innerHeight * 0.4;
     sections.forEach((secId) => {
       const el = document.getElementById(secId);
@@ -132,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Staggered Scroll Reveal
-  const observerOptions = { threshold: 0.08 };
+  const observerOptions = { threshold: 0.06 };
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -143,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.reveal-on-scroll').forEach((el) => revealObserver.observe(el));
 
-  // 7. Sound Engine Audio Toggle
+  // 8. Sound Engine Audio Toggle
   const audioBtn = document.getElementById('audio-toggle-btn');
   if (audioBtn) {
     audioBtn.addEventListener('click', () => {
@@ -158,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 8. Interactive DCA Simulator Binding
+  // 9. Interactive DCA Simulator Binding
   const depositSlider = document.getElementById('sim-deposit-slider');
   const depositValDisplay = document.getElementById('sim-deposit-val');
   const simStrategySelect = document.getElementById('sim-strategy-select');
@@ -218,7 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Timeframe and Frequency pill toggles
   document.querySelectorAll('.timeframe-pill').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       document.querySelectorAll('.timeframe-pill').forEach((b) => b.classList.remove('active'));
@@ -239,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 9. Render Strategy Vaults Cards
+  // 10. Render Strategy Vaults Cards
   const vaultsGrid = document.getElementById('vaults-grid');
   if (vaultsGrid && window.VAULTS_DATA) {
     vaultsGrid.innerHTML = window.VAULTS_DATA.map((v) => {
@@ -304,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }).join('');
   }
 
-  // 10. Render Token Tier Ladder
+  // 11. Render Token Tier Ladder
   const tiersGrid = document.getElementById('tiers-ladder-grid');
   if (tiersGrid && window.TOKEN_TIERS) {
     tiersGrid.innerHTML = window.TOKEN_TIERS.map((t, idx) => `
@@ -337,7 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-  // 11. Dynamic Token Staking Savings Calculator
+  // 12. Dynamic Token Staking Savings Calculator
   const stakeSlider = document.getElementById('stake-calc-slider');
   const stakeAmountDisplay = document.getElementById('stake-calc-amount');
   const stakeFeeRateDisplay = document.getElementById('stake-calc-fee-rate');
@@ -385,7 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 12. Live Simulated Transaction Ticker Stream
+  // 13. Live Simulated Transaction Ticker Stream
   const tickerTrack = document.getElementById('live-ticker-track');
   if (tickerTrack && window.SIMULATED_TRANSACTIONS) {
     const renderTicker = () => {
@@ -423,7 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 6000);
   }
 
-  // 13. Modal Handlers
+  // 14. Modal Handlers
   const walletModal = document.getElementById('wallet-modal');
   const depositModal = document.getElementById('deposit-modal');
   const connectWalletBtns = document.querySelectorAll('.connect-wallet-btn');
@@ -432,6 +464,8 @@ document.addEventListener('DOMContentLoaded', () => {
   connectWalletBtns.forEach((b) => {
     b.addEventListener('click', () => {
       if (window.soundEngine) window.soundEngine.playClick();
+      if (mobileNavDrawer) mobileNavDrawer.classList.remove('open');
+      document.body.style.overflow = '';
       if (walletModal) walletModal.classList.add('open');
     });
   });
