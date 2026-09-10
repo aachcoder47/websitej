@@ -1,36 +1,34 @@
 /**
  * ORBITAL VAULT - Main Application Controller
- * High-performance state management, preloader opening transition, interactive simulators, wallet integration, and Robinhood Chain execution
+ * High-performance state management, 5-slice quantum aperture transition, interactive simulators, wallet integration, and Robinhood Chain execution
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Cinematic Opening Shutter Transition & Preloader
-  const preloader = document.getElementById('preloader-overlay');
-  const progressFill = document.getElementById('preloader-progress-fill');
-  const counterEl = document.getElementById('preloader-counter');
+  // 1. Unique 5-Slice Quantum Aperture Opening Transition
+  const apertureOverlay = document.getElementById('quantum-aperture-overlay');
+  const hudCounter = document.getElementById('hud-counter');
 
   let loadProgress = 0;
   const loadInterval = setInterval(() => {
-    loadProgress += Math.floor(Math.random() * 18) + 8;
+    loadProgress += Math.floor(Math.random() * 16) + 7;
     if (loadProgress >= 100) {
       loadProgress = 100;
       clearInterval(loadInterval);
 
-      if (progressFill) progressFill.style.width = '100%';
-      if (counterEl) counterEl.textContent = '100%';
+      if (hudCounter) hudCounter.textContent = '100%';
+      if (apertureOverlay) apertureOverlay.classList.add('ignited');
 
       setTimeout(() => {
-        if (preloader) preloader.classList.add('loaded');
+        if (apertureOverlay) apertureOverlay.classList.add('unfurled');
         document.body.classList.add('page-ready');
         if (window.soundEngine && !appState.audioMuted) {
           window.soundEngine.playSuccess();
         }
       }, 350);
     } else {
-      if (progressFill) progressFill.style.width = `${loadProgress}%`;
-      if (counterEl) counterEl.textContent = `${loadProgress}%`;
+      if (hudCounter) hudCounter.textContent = `${loadProgress}%`;
     }
-  }, 40);
+  }, 45);
 
   // 2. Initialize State
   const appState = {
@@ -71,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     chartEngine = new DCAChartEngine('dca-chart-canvas');
   }
 
-  // 5. Cursor Glow Tracker & 3D Tilt Effect
+  // 5. Cursor Glow Tracker & Dynamic 3D Card Tilt
   const cursorGlow = document.getElementById('cursor-glow');
   window.addEventListener('mousemove', (e) => {
     if (cursorGlow) {
@@ -79,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
       cursorGlow.style.top = `${e.clientY}px`;
     }
 
-    // Dynamic 3D card tilt & subtle specular perspective
     document.querySelectorAll('.interactive-card').forEach((card) => {
       const rect = card.getBoundingClientRect();
       if (
@@ -102,16 +99,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 6. Scroll Header State & Scroll Reveal
+  // 6. Scroll Header State & Section HUD Tracker Spy
   const siteHeader = document.getElementById('site-header');
+  const hudItems = document.querySelectorAll('.hud-dot-item');
+  const sections = ['hero', 'simulator', 'vaults', 'tokenomics', 'infrastructure'];
+
   window.addEventListener('scroll', () => {
     if (window.scrollY > 40) {
       siteHeader.classList.add('scrolled');
     } else {
       siteHeader.classList.remove('scrolled');
     }
+
+    // Scroll spy for left HUD
+    const scrollPos = window.scrollY + window.innerHeight * 0.4;
+    sections.forEach((secId) => {
+      const el = document.getElementById(secId);
+      if (el) {
+        const top = el.offsetTop;
+        const height = el.offsetHeight;
+        if (scrollPos >= top && scrollPos < top + height) {
+          hudItems.forEach((item) => {
+            if (item.getAttribute('data-section') === secId) {
+              item.classList.add('active');
+            } else {
+              item.classList.remove('active');
+            }
+          });
+        }
+      }
+    });
   });
 
+  // Staggered Scroll Reveal
   const observerOptions = { threshold: 0.08 };
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -159,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     chartEngine.setConfig(deposit, timeframe, frequency, strategy);
 
-    // Update summary metrics
     const estValEl = document.getElementById('sim-metric-est-val');
     const estProfitEl = document.getElementById('sim-metric-profit');
     const gasSavedEl = document.getElementById('sim-metric-gas-saved');

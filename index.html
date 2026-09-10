@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ORBITAL VAULT — Algorithmic Auto-DCA & Rebalancing on Robinhood Chain</title>
   <meta name="description" content="The institutional-grade, zero-emotion auto-DCA and dynamic portfolio rebalancing vault engine built natively for Robinhood Chain. Deposit, automate, and eliminate human panic with zero-gas execution.">
   
@@ -20,21 +20,91 @@
 <body>
 
   <!-- =========================================================================
-       CINEMATIC PRELOADER & OPENING SHUTTER TRANSITION
+       UNIQUE 5-SLICE QUANTUM APERTURE OPENING TRANSITION
        ========================================================================= -->
-  <div id="preloader-overlay" class="preloader-overlay">
-    <div class="preloader-content">
-      <div class="preloader-logo-ring"></div>
-      <div class="preloader-status-text">
+  <div id="quantum-aperture-overlay" class="quantum-aperture-overlay">
+    <!-- 5 Vertical Slit Columns -->
+    <div class="aperture-slice-container">
+      <div class="aperture-column"></div>
+      <div class="aperture-column"></div>
+      <div class="aperture-column"></div>
+      <div class="aperture-column"></div>
+      <div class="aperture-column"></div>
+    </div>
+
+    <!-- Singularity Compass HUD -->
+    <div class="singularity-hud" id="singularity-hud">
+      <div class="compass-ring-wrap">
+        <div class="compass-ring-outer"></div>
+        <div class="compass-ring-inner"></div>
+        <div class="compass-core-dot"></div>
+      </div>
+      <div class="hud-protocol-code">LAT: 37.77° N // BLOCK: #18,920,412 // ROBINHOOD_ORBIT_L2</div>
+      <div id="hud-counter" class="hud-counter-large">0%</div>
+      <div class="hud-status-badge">
         <span class="pulse-dot"></span>
-        <span>Initializing Robinhood Chain Protocol</span>
+        <span>Aperture Syncing</span>
       </div>
-      <div class="preloader-progress-bar">
-        <div id="preloader-progress-fill" class="preloader-progress-fill"></div>
-      </div>
-      <div id="preloader-counter" class="preloader-counter">0%</div>
     </div>
   </div>
+
+  <!-- Mobile Navigation Drawer Overlay -->
+  <div id="mobile-nav-drawer" class="mobile-nav-drawer">
+    <div class="mobile-drawer-head">
+      <div class="brand-logo">
+        <div class="logo-symbol">
+          <svg viewBox="0 0 24 24">
+            <polygon points="12 2 2 12 12 22 22 12"></polygon>
+            <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+          </svg>
+        </div>
+        <span class="logo-text">ORBITAL<span>.VAULT</span></span>
+      </div>
+      <button class="modal-close-btn" id="mobile-drawer-close" style="position: static;">✕</button>
+    </div>
+
+    <ul class="mobile-nav-list">
+      <li><a href="#simulator" class="mobile-nav-link"><span>01. Strategy Engine</span> <span>→</span></a></li>
+      <li><a href="#vaults" class="mobile-nav-link"><span>02. Live Vaults</span> <span>→</span></a></li>
+      <li><a href="#tokenomics" class="mobile-nav-link"><span>03. Zero-Fee Tier</span> <span>→</span></a></li>
+      <li><a href="#infrastructure" class="mobile-nav-link"><span>04. Robinhood Chain</span> <span>→</span></a></li>
+    </ul>
+
+    <div>
+      <button class="btn-primary connect-wallet-btn" style="width: 100%; margin-bottom: 12px;">
+        Connect Robinhood Wallet
+      </button>
+      <div style="font-size: 0.72rem; color: var(--text-dim); text-align: center; font-family: var(--font-mono);">
+        Robinhood Chain #77701 (0-Gas Rollup)
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Left Margin Section Tracker HUD (Desktop only) -->
+  <aside class="floating-section-hud">
+    <div class="hud-track-line">
+      <a href="#hero" class="hud-dot-item active" data-section="hero">
+        <span class="hud-dot-pip"></span>
+        <span class="hud-dot-label">01 // Accretion Core</span>
+      </a>
+      <a href="#simulator" class="hud-dot-item" data-section="simulator">
+        <span class="hud-dot-pip"></span>
+        <span class="hud-dot-label">02 // Strategy Engine</span>
+      </a>
+      <a href="#vaults" class="hud-dot-item" data-section="vaults">
+        <span class="hud-dot-pip"></span>
+        <span class="hud-dot-label">03 // Curated Vaults</span>
+      </a>
+      <a href="#tokenomics" class="hud-dot-item" data-section="tokenomics">
+        <span class="hud-dot-pip"></span>
+        <span class="hud-dot-label">04 // $ORBIT Staking</span>
+      </a>
+      <a href="#infrastructure" class="hud-dot-item" data-section="infrastructure">
+        <span class="hud-dot-pip"></span>
+        <span class="hud-dot-label">05 // RH Rollup L2</span>
+      </a>
+    </div>
+  </aside>
 
   <!-- Ambient Web3 Precision Grid & Cursor Glow -->
   <div class="ambient-grid"></div>
@@ -60,7 +130,7 @@
           <span class="logo-text">ORBITAL<span>.VAULT</span></span>
         </a>
 
-        <!-- Navigation Links -->
+        <!-- Desktop Navigation Links -->
         <nav>
           <ul class="nav-links">
             <li><a href="#simulator" class="nav-link">Strategy Engine</a></li>
@@ -89,6 +159,15 @@
           <!-- Connect Wallet Button -->
           <button class="btn-primary wallet-btn connect-wallet-btn" id="header-connect-wallet-btn">
             Connect Wallet
+          </button>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Open Navigation">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
           </button>
         </div>
       </div>
@@ -216,7 +295,7 @@
             <div class="control-header">
               <span class="control-label">Vault Strategy</span>
             </div>
-            <select id="sim-strategy-select" style="width: 100%; padding: 12px 16px; border-radius: var(--radius-sm); background: rgba(3,5,8,0.85); border: 1px solid var(--border-subtle); color: var(--text-pure); font-family: var(--font-heading); font-size: 0.9rem; outline: none; cursor: pointer; transition: border-color var(--transition-fast);">
+            <select id="sim-strategy-select" style="width: 100%; padding: 12px 14px; border-radius: var(--radius-sm); background: rgba(3,5,8,0.85); border: 1px solid var(--border-subtle); color: var(--text-pure); font-family: var(--font-heading); font-size: 0.88rem; outline: none; cursor: pointer; transition: border-color var(--transition-fast);">
               <option value="vault-prime-bluechip">Robinhood Prime Bluechip (BTC / ETH / SOL)</option>
               <option value="vault-rwa-yield">Institutional RWA & Super-Yield (T-Bills / LST)</option>
               <option value="vault-ai-depin">Frontier AI & DePIN Compute Index</option>
@@ -250,7 +329,7 @@
           </div>
 
           <!-- Quick Action -->
-          <button class="btn-primary deposit-vault-trigger" data-vault-id="vault-prime-bluechip" style="width: 100%; margin-top: 10px;">
+          <button class="btn-primary deposit-vault-trigger" data-vault-id="vault-prime-bluechip" style="width: 100%; margin-top: 8px;">
             Deploy This Allocation
           </button>
         </div>
@@ -258,7 +337,7 @@
         <!-- Chart Column -->
         <div class="glass-panel simulator-display reveal-on-scroll">
           <div class="chart-header">
-            <div style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; color: var(--text-pure);">
+            <div style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 600; color: var(--text-pure);">
               Portfolio Growth & Mean-Reversion Harvest
             </div>
             <div class="chart-legend">
@@ -349,7 +428,7 @@
         <div>
           <span class="badge-pill green" style="margin-bottom: 12px;"><span class="pulse-dot"></span> Interactive Staking Matrix</span>
           <h3 style="margin-bottom: 10px;">Calculate Your Annual Fee Savings</h3>
-          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 22px;">
             Slide your target $ORBIT staking amount to calculate your effective fee reduction and projected annual wealth retention on Robinhood Chain.
           </p>
 
@@ -367,20 +446,20 @@
           </div>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 16px; padding: 24px; border-radius: var(--radius-md); background: rgba(3,5,8,0.7); border: 1px solid var(--border-subtle);">
+        <div style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border-radius: var(--radius-md); background: rgba(3,5,8,0.7); border: 1px solid var(--border-subtle);">
           <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-size: 0.82rem; color: var(--text-dim); font-family: var(--font-mono);">UNLOCKED TIER</span>
-            <span style="font-size: 1.05rem; font-family: var(--font-heading); font-weight: 700; color: var(--rh-green);" id="stake-calc-tier-name">Architect (Tier 2)</span>
+            <span style="font-size: 0.8rem; color: var(--text-dim); font-family: var(--font-mono);">UNLOCKED TIER</span>
+            <span style="font-size: 1.0rem; font-family: var(--font-heading); font-weight: 700; color: var(--rh-green);" id="stake-calc-tier-name">Architect (Tier 2)</span>
           </div>
           <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-size: 0.82rem; color: var(--text-dim); font-family: var(--font-mono);">EFFECTIVE FEE</span>
-            <span style="font-size: 1.4rem; font-family: var(--font-mono); font-weight: 800; color: var(--text-pure);" id="stake-calc-fee-rate">0.08%</span>
+            <span style="font-size: 0.8rem; color: var(--text-dim); font-family: var(--font-mono);">EFFECTIVE FEE</span>
+            <span style="font-size: 1.35rem; font-family: var(--font-mono); font-weight: 800; color: var(--text-pure);" id="stake-calc-fee-rate">0.08%</span>
           </div>
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid var(--border-subtle);">
-            <span style="font-size: 0.82rem; color: var(--text-dim); font-family: var(--font-mono);">ESTIMATED ANNUAL SAVINGS</span>
-            <span style="font-size: 1.4rem; font-family: var(--font-mono); font-weight: 800; color: var(--rh-green);" id="stake-calc-savings">+$1,174 / yr</span>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--border-subtle);">
+            <span style="font-size: 0.8rem; color: var(--text-dim); font-family: var(--font-mono);">ESTIMATED ANNUAL SAVINGS</span>
+            <span style="font-size: 1.35rem; font-family: var(--font-mono); font-weight: 800; color: var(--rh-green);" id="stake-calc-savings">+$1,174 / yr</span>
           </div>
-          <button class="btn-primary" style="margin-top: 8px;">
+          <button class="btn-primary" style="margin-top: 6px;">
             Stake $ORBIT on Robinhood Chain
           </button>
         </div>
@@ -440,11 +519,11 @@
   <!-- =========================================================================
        8. FOOTER
        ========================================================================= -->
-  <footer style="padding: 80px 0 40px; border-top: 1px solid var(--border-subtle); position: relative; z-index: 10; background: var(--bg-void);">
+  <footer style="padding: 70px 0 35px; border-top: 1px solid var(--border-subtle); position: relative; z-index: 10; background: var(--bg-void);">
     <div class="container">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px; margin-bottom: 60px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 36px; margin-bottom: 50px;">
         <div style="max-width: 360px;">
-          <a href="#" class="brand-logo" style="margin-bottom: 16px;">
+          <a href="#" class="brand-logo" style="margin-bottom: 14px;">
             <div class="logo-symbol">
               <svg viewBox="0 0 24 24">
                 <polygon points="12 2 2 12 12 22 22 12"></polygon>
@@ -453,15 +532,15 @@
             </div>
             <span class="logo-text">ORBITAL<span>.VAULT</span></span>
           </a>
-          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;">
+          <p style="font-size: 0.86rem; color: var(--text-muted); line-height: 1.6;">
             The non-custodial auto-DCA and dynamic portfolio rebalancing platform engineered for the Robinhood Chain ecosystem.
           </p>
         </div>
 
-        <div style="display: flex; gap: 60px; flex-wrap: wrap;">
+        <div style="display: flex; gap: 40px; flex-wrap: wrap;">
           <div>
-            <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--rh-green); text-transform: uppercase; margin-bottom: 16px; letter-spacing: 0.05em;">Protocol</div>
-            <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--rh-green); text-transform: uppercase; margin-bottom: 14px; letter-spacing: 0.05em;">Protocol</div>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.86rem;">
               <li><a href="#simulator" style="color: var(--text-muted); text-decoration: none;">Strategy Engine</a></li>
               <li><a href="#vaults" style="color: var(--text-muted); text-decoration: none;">Curated Vaults</a></li>
               <li><a href="#tokenomics" style="color: var(--text-muted); text-decoration: none;">$ORBIT Staking</a></li>
@@ -470,9 +549,9 @@
           </div>
 
           <div>
-            <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--rh-green); text-transform: uppercase; margin-bottom: 16px; letter-spacing: 0.05em;">Security</div>
-            <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem;">
-              <li><a href="#" style="color: var(--text-muted); text-decoration: none;">Audit Reports (CertiK / OpenZeppelin)</a></li>
+            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--rh-green); text-transform: uppercase; margin-bottom: 14px; letter-spacing: 0.05em;">Security</div>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.86rem;">
+              <li><a href="#" style="color: var(--text-muted); text-decoration: none;">Audit Reports</a></li>
               <li><a href="#" style="color: var(--text-muted); text-decoration: none;">Bug Bounty Program</a></li>
               <li><a href="#" style="color: var(--text-muted); text-decoration: none;">Open-Source Contracts</a></li>
               <li><a href="#" style="color: var(--text-muted); text-decoration: none;">Chainlink Oracles</a></li>
@@ -481,7 +560,7 @@
         </div>
       </div>
 
-      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 24px; font-size: 0.78rem; color: var(--text-dim); font-family: var(--font-mono); flex-wrap: wrap; gap: 16px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 20px; font-size: 0.76rem; color: var(--text-dim); font-family: var(--font-mono); flex-wrap: wrap; gap: 12px;">
         <div>© 2026 Orbital Vault Protocol. Robinhood Chain Native.</div>
         <div style="display: flex; align-items: center; gap: 8px;">
           <span class="pulse-dot" style="background: var(--rh-green); box-shadow: 0 0 8px var(--rh-green);"></span>
@@ -497,9 +576,9 @@
   <div id="wallet-modal" class="modal-backdrop">
     <div class="modal-card">
       <button class="modal-close-btn" id="wallet-modal-close">✕</button>
-      <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--rh-green); margin-bottom: 6px; letter-spacing: 0.04em;">WEB3 INTERFACE</div>
-      <h3 style="margin-bottom: 8px;">Connect to Robinhood Chain</h3>
-      <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 20px;">
+      <div style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--rh-green); margin-bottom: 6px; letter-spacing: 0.04em;">WEB3 INTERFACE</div>
+      <h3 style="margin-bottom: 6px; font-size: 1.25rem;">Connect to Robinhood Chain</h3>
+      <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 18px;">
         Choose your preferred EVM wallet to access automated DCA vaults.
       </p>
 
@@ -508,19 +587,19 @@
           <div class="wallet-option-left">
             <div class="wallet-icon-box" style="background: rgba(0, 217, 90, 0.12); color: #00D95A; font-weight: 800;">RH</div>
             <div>
-              <div style="font-weight: 600; font-size: 0.92rem;">Robinhood Wallet</div>
-              <div style="font-size: 0.75rem; color: var(--rh-green);">Native 0-Gas Integration</div>
+              <div style="font-weight: 600; font-size: 0.9rem;">Robinhood Wallet</div>
+              <div style="font-size: 0.72rem; color: var(--rh-green);">Native 0-Gas Integration</div>
             </div>
           </div>
-          <span class="badge-pill green" style="font-size: 0.68rem;">Recommended</span>
+          <span class="badge-pill green" style="font-size: 0.65rem;">Recommended</span>
         </div>
 
         <div class="wallet-option-item" data-wallet="MetaMask">
           <div class="wallet-option-left">
             <div class="wallet-icon-box" style="background: rgba(246, 133, 27, 0.12); color: #F6851B; font-weight: 800;">🦊</div>
             <div>
-              <div style="font-weight: 600; font-size: 0.92rem;">MetaMask</div>
-              <div style="font-size: 0.75rem; color: var(--text-dim);">EVM Injected Extension</div>
+              <div style="font-weight: 600; font-size: 0.9rem;">MetaMask</div>
+              <div style="font-size: 0.72rem; color: var(--text-dim);">EVM Injected Extension</div>
             </div>
           </div>
         </div>
@@ -529,8 +608,8 @@
           <div class="wallet-option-left">
             <div class="wallet-icon-box" style="background: rgba(99, 102, 241, 0.12); color: #6366F1; font-weight: 800;">🐰</div>
             <div>
-              <div style="font-weight: 600; font-size: 0.92rem;">Rabby Wallet</div>
-              <div style="font-size: 0.75rem; color: var(--text-dim);">Multi-Chain Orbit Optimized</div>
+              <div style="font-weight: 600; font-size: 0.9rem;">Rabby Wallet</div>
+              <div style="font-size: 0.72rem; color: var(--text-dim);">Multi-Chain Orbit Optimized</div>
             </div>
           </div>
         </div>
@@ -539,14 +618,14 @@
           <div class="wallet-option-left">
             <div class="wallet-icon-box" style="background: rgba(59, 130, 246, 0.12); color: #3B82F6; font-weight: 800;">🔵</div>
             <div>
-              <div style="font-weight: 600; font-size: 0.92rem;">Coinbase Wallet / Smart Wallet</div>
-              <div style="font-size: 0.75rem; color: var(--text-dim);">Passkey & MPC Support</div>
+              <div style="font-weight: 600; font-size: 0.9rem;">Coinbase Wallet</div>
+              <div style="font-size: 0.72rem; color: var(--text-dim);">Passkey & MPC Support</div>
             </div>
           </div>
         </div>
       </div>
 
-      <div style="font-size: 0.74rem; color: var(--text-dim); text-align: center; font-family: var(--font-mono);">
+      <div style="font-size: 0.72rem; color: var(--text-dim); text-align: center; font-family: var(--font-mono);">
         By connecting, you agree to Orbital Vault's non-custodial terms on Robinhood Chain (#77701).
       </div>
     </div>
@@ -558,29 +637,29 @@
   <div id="deposit-modal" class="modal-backdrop">
     <div class="modal-card">
       <button class="modal-close-btn" id="deposit-modal-close">✕</button>
-      <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--rh-green); margin-bottom: 6px; letter-spacing: 0.04em;">EXECUTE AUTOMATION</div>
-      <h3 id="modal-deposit-vault-title" style="margin-bottom: 6px;">Robinhood Prime Bluechip</h3>
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">
+      <div style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--rh-green); margin-bottom: 6px; letter-spacing: 0.04em;">EXECUTE AUTOMATION</div>
+      <h3 id="modal-deposit-vault-title" style="margin-bottom: 6px; font-size: 1.25rem;">Robinhood Prime Bluechip</h3>
+      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 18px;">
         Deposit once. The contract will automatically execute micro-DCA orders and mean-reversion rebalancing.
       </p>
 
-      <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px;">
+      <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
         <div>
-          <label style="font-size: 0.76rem; font-family: var(--font-mono); color: var(--text-dim); text-transform: uppercase;">Deposit Collateral (Robinhood Chain)</label>
-          <div style="display: flex; align-items: center; background: rgba(3,5,8,0.8); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 8px 14px; margin-top: 6px;">
-            <input type="number" id="modal-deposit-amount" value="1000" style="flex: 1; background: transparent; border: none; color: var(--text-pure); font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700; outline: none;">
-            <span class="badge-pill green" style="font-size: 0.75rem;">USDC</span>
+          <label style="font-size: 0.74rem; font-family: var(--font-mono); color: var(--text-dim); text-transform: uppercase;">Deposit Collateral (Robinhood Chain)</label>
+          <div style="display: flex; align-items: center; background: rgba(3,5,8,0.8); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 8px 12px; margin-top: 6px;">
+            <input type="number" id="modal-deposit-amount" value="1000" style="flex: 1; background: transparent; border: none; color: var(--text-pure); font-family: var(--font-mono); font-size: 1.15rem; font-weight: 700; outline: none;">
+            <span class="badge-pill green" style="font-size: 0.72rem;">USDC</span>
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-          <div style="padding: 12px; border-radius: var(--radius-sm); background: rgba(3,5,8,0.6); border: 1px solid var(--border-subtle);">
-            <div style="font-size: 0.7rem; color: var(--text-dim); font-family: var(--font-mono);">DCA INTERVAL</div>
-            <div style="font-size: 0.92rem; font-family: var(--font-mono); font-weight: 700; color: var(--rh-green); margin-top: 2px;">Daily (Every 24h)</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div style="padding: 10px; border-radius: var(--radius-sm); background: rgba(3,5,8,0.6); border: 1px solid var(--border-subtle);">
+            <div style="font-size: 0.68rem; color: var(--text-dim); font-family: var(--font-mono);">DCA INTERVAL</div>
+            <div style="font-size: 0.88rem; font-family: var(--font-mono); font-weight: 700; color: var(--rh-green); margin-top: 2px;">Daily (Every 24h)</div>
           </div>
-          <div style="padding: 12px; border-radius: var(--radius-sm); background: rgba(3,5,8,0.6); border: 1px solid var(--border-subtle);">
-            <div style="font-size: 0.7rem; color: var(--text-dim); font-family: var(--font-mono);">EST. GAS PER BATCH</div>
-            <div style="font-size: 0.92rem; font-family: var(--font-mono); font-weight: 700; color: var(--rh-green); margin-top: 2px;">$0.0004 (Sponsored)</div>
+          <div style="padding: 10px; border-radius: var(--radius-sm); background: rgba(3,5,8,0.6); border: 1px solid var(--border-subtle);">
+            <div style="font-size: 0.68rem; color: var(--text-dim); font-family: var(--font-mono);">EST. GAS PER BATCH</div>
+            <div style="font-size: 0.88rem; font-family: var(--font-mono); font-weight: 700; color: var(--rh-green); margin-top: 2px;">$0.0004 (Sponsored)</div>
           </div>
         </div>
       </div>
