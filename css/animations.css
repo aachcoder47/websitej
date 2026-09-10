@@ -1,0 +1,232 @@
+/* ==========================================================================
+   ORBITAL VAULT - Motion, Keyframes, Aperture Shutter & Opening Transitions
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Cinematic Opening Shutter & Preloader
+   -------------------------------------------------------------------------- */
+.preloader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #020306;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.95s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.95s cubic-bezier(0.85, 0, 0.15, 1);
+  will-change: transform, opacity;
+  pointer-events: all;
+}
+
+.preloader-overlay.loaded {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.preloader-overlay.loaded .preloader-content {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.preloader-logo-ring {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  border-top-color: #00D95A;
+  border-right-color: rgba(0, 217, 90, 0.4);
+  animation: spinRing 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.preloader-logo-ring::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00D95A;
+  box-shadow: 0 0 12px #00D95A;
+}
+
+.preloader-status-text {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preloader-progress-bar {
+  width: 180px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.preloader-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00D95A, #3B82F6);
+  box-shadow: 0 0 10px #00D95A;
+  transition: width 0.08s linear;
+}
+
+.preloader-counter {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #00D95A;
+}
+
+/* --------------------------------------------------------------------------
+   2. Staggered Hero Intro Sequence
+   -------------------------------------------------------------------------- */
+.hero-stagger {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 1.0s cubic-bezier(0.16, 1, 0.3, 1), transform 1.0s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+body.page-ready .hero-stagger-1 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.1s;
+}
+
+body.page-ready .hero-stagger-2 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.25s;
+}
+
+body.page-ready .hero-stagger-3 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.4s;
+}
+
+body.page-ready .hero-stagger-4 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.55s;
+}
+
+body.page-ready .hero-stagger-5 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.7s;
+}
+
+/* --------------------------------------------------------------------------
+   3. Keyframe Animations
+   -------------------------------------------------------------------------- */
+@keyframes spinRing {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes tickerSlide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes borderGlowPulse {
+  0%, 100% {
+    border-color: rgba(0, 217, 90, 0.2);
+    box-shadow: 0 0 15px rgba(0, 217, 90, 0.08);
+  }
+  50% {
+    border-color: rgba(0, 217, 90, 0.5);
+    box-shadow: 0 0 28px rgba(0, 217, 90, 0.25);
+  }
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.anim-glow-pulse {
+  animation: borderGlowPulse 4.5s infinite ease-in-out;
+}
+
+/* --------------------------------------------------------------------------
+   4. Staggered Scroll Reveal
+   -------------------------------------------------------------------------- */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   5. Interactive 3D Card Hover & Glare
+   -------------------------------------------------------------------------- */
+.interactive-card {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.interactive-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 217, 90, 0.08);
+}

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ORBITAL VAULT — Algorithmic Auto-DCA & Rebalancing on Robinhood Chain</title>
+  <meta name="description" content="The institutional-grade, zero-emotion auto-DCA and dynamic portfolio rebalancing vault engine built natively for Robinhood Chain. Deposit, automate, and eliminate human panic with zero-gas execution.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%2300D95A'/><path d='M30 50 L50 25 L70 50 L50 75 Z' fill='%23030508'/></svg>">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+
+  <!-- Three.js CDN for 3D Accretion Disk & Crystal Geometry -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+  <!-- =========================================================================
+       CINEMATIC PRELOADER & OPENING SHUTTER TRANSITION
+       ========================================================================= -->
+  <div id="preloader-overlay" class="preloader-overlay">
+    <div class="preloader-content">
+      <div class="preloader-logo-ring"></div>
+      <div class="preloader-status-text">
+        <span class="pulse-dot"></span>
+        <span>Initializing Robinhood Chain Protocol</span>
+      </div>
+      <div class="preloader-progress-bar">
+        <div id="preloader-progress-fill" class="preloader-progress-fill"></div>
+      </div>
+      <div id="preloader-counter" class="preloader-counter">0%</div>
+    </div>
+  </div>
+
+  <!-- Ambient Web3 Precision Grid & Cursor Glow -->
+  <div class="ambient-grid"></div>
+  <div id="cursor-glow" class="cursor-glow"></div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- =========================================================================
+       1. NAVIGATION HEADER
+       ========================================================================= -->
+  <header id="site-header" class="site-header hero-stagger hero-stagger-1">
+    <div class="container">
+      <div class="nav-inner">
+        <!-- Logo -->
+        <a href="#" class="brand-logo" id="nav-brand-logo">
+          <div class="logo-symbol">
+            <svg viewBox="0 0 24 24">
+              <polygon points="12 2 2 12 12 22 22 12"></polygon>
+              <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+            </svg>
+          </div>
+          <span class="logo-text">ORBITAL<span>.VAULT</span></span>
+        </a>
+
+        <!-- Navigation Links -->
+        <nav>
+          <ul class="nav-links">
+            <li><a href="#simulator" class="nav-link">Strategy Engine</a></li>
+            <li><a href="#vaults" class="nav-link">Live Vaults</a></li>
+            <li><a href="#tokenomics" class="nav-link">Zero-Fee Tier</a></li>
+            <li><a href="#infrastructure" class="nav-link">Robinhood Chain</a></li>
+          </ul>
+        </nav>
+
+        <!-- Right Actions -->
+        <div class="nav-actions">
+          <!-- Audio Toggle Button -->
+          <button id="audio-toggle-btn" class="audio-toggle-btn" title="Toggle Tactile Web3 Sound FX">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+          </button>
+
+          <!-- Robinhood Chain Status Badge -->
+          <div class="network-pill" id="network-pill-status" title="Active on Robinhood Chain Arbitrum Orbit Rollup">
+            <span class="pulse-dot"></span>
+            <span>Robinhood Chain #77701</span>
+          </div>
+
+          <!-- Connect Wallet Button -->
+          <button class="btn-primary wallet-btn connect-wallet-btn" id="header-connect-wallet-btn">
+            Connect Wallet
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       2. HERO SECTION WITH 3D ACCRETION DISK
+       ========================================================================= -->
+  <section class="hero-section" id="hero">
+    <!-- WebGL Three.js Accretion Canvas -->
+    <div id="webgl-canvas-container" class="webgl-canvas-container"></div>
+
+    <div class="container">
+      <div class="hero-content">
+        <!-- Eyebrow Badge -->
+        <div class="hero-eyebrow hero-stagger hero-stagger-2">
+          <div class="badge-pill green">
+            <span class="pulse-dot"></span>
+            Robinhood Chain Native • 0-Gas Micro-Execution
+          </div>
+        </div>
+
+        <!-- Main Title -->
+        <h1 class="hero-title hero-stagger hero-stagger-3">
+          Zero Emotion. <br/>
+          <span class="text-gradient-green">Algorithmic DCA</span> & <br/>
+          <span class="text-gradient-titanium">Dynamic Rebalancing.</span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="hero-subtitle hero-stagger hero-stagger-4">
+          The institutional set-and-forget vault protocol. Deposit funds once, eliminate human panic, auto-accumulate your chosen asset baskets daily, and harvest mean-reversion alpha with sub-second finality.
+        </p>
+
+        <!-- CTAs -->
+        <div class="hero-cta-group hero-stagger hero-stagger-4">
+          <a href="#simulator" class="btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            Launch Strategy Engine
+          </a>
+          <a href="#vaults" class="btn-secondary">
+            Explore Curated Vaults
+          </a>
+        </div>
+
+        <!-- Hero Stats Grid -->
+        <div class="hero-stats-grid hero-stagger hero-stagger-5">
+          <div class="glass-panel stat-card">
+            <div class="stat-label">Total Value Locked</div>
+            <div class="stat-value text-green">$174,670,900</div>
+            <div class="stat-sub">▲ +18.4% this month</div>
+          </div>
+          <div class="glass-panel stat-card">
+            <div class="stat-label">Cumulative DCA Volume</div>
+            <div class="stat-value">$892,140,500</div>
+            <div class="stat-sub" style="color: var(--text-muted);">Across 14,200+ Vaults</div>
+          </div>
+          <div class="glass-panel stat-card">
+            <div class="stat-label">Avg Execution Gas</div>
+            <div class="stat-value text-green">&lt; $0.0006</div>
+            <div class="stat-sub">Robinhood Orbit Rollup</div>
+          </div>
+          <div class="glass-panel stat-card">
+            <div class="stat-label">Rebalances Executed</div>
+            <div class="stat-value text-blue">1,480,290</div>
+            <div class="stat-sub" style="color: var(--text-muted);">Zero Human Emotion</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       3. LIVE EXECUTION TICKER STREAM
+       ========================================================================= -->
+  <section class="live-ticker-bar">
+    <div class="container">
+      <div class="ticker-inner">
+        <div class="ticker-label">
+          <span class="pulse-dot"></span>
+          Live Stream
+        </div>
+        <div class="ticker-track" id="live-ticker-track">
+          <!-- Populated dynamically by app.js -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       4. INTERACTIVE DCA & REBALANCE STRATEGY SIMULATOR
+       ========================================================================= -->
+  <section class="section-pad" id="simulator">
+    <div class="container">
+      <div class="section-head reveal-on-scroll">
+        <div class="section-eyebrow">
+          <span class="badge-pill blue">Interactive Visualizer</span>
+        </div>
+        <h2 class="section-title">Test Your Strategy with <span class="text-gradient-green">Live Math Models</span></h2>
+        <p class="section-desc">
+          Compare automated Dollar-Cost Averaging paired with Shannon's Demon algorithmic rebalancing against simple Lump-Sum and raw HODLing over real historical market regimes.
+        </p>
+      </div>
+
+      <div class="simulator-layout">
+        <!-- Controls Column -->
+        <div class="glass-panel simulator-controls reveal-on-scroll">
+          <!-- Monthly Deposit Slider -->
+          <div class="control-group">
+            <div class="control-header">
+              <span class="control-label">Monthly Deposit</span>
+              <span class="control-val" id="sim-deposit-val">$1,000</span>
+            </div>
+            <input type="range" id="sim-deposit-slider" class="slider-input" min="100" max="25000" step="100" value="1000">
+            <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);">
+              <span>$100</span>
+              <span>$10k</span>
+              <span>$25,000+</span>
+            </div>
+          </div>
+
+          <!-- Strategy Selection -->
+          <div class="control-group">
+            <div class="control-header">
+              <span class="control-label">Vault Strategy</span>
+            </div>
+            <select id="sim-strategy-select" style="width: 100%; padding: 12px 16px; border-radius: var(--radius-sm); background: rgba(3,5,8,0.85); border: 1px solid var(--border-subtle); color: var(--text-pure); font-family: var(--font-heading); font-size: 0.9rem; outline: none; cursor: pointer; transition: border-color var(--transition-fast);">
+              <option value="vault-prime-bluechip">Robinhood Prime Bluechip (BTC / ETH / SOL)</option>
+              <option value="vault-rwa-yield">Institutional RWA & Super-Yield (T-Bills / LST)</option>
+              <option value="vault-ai-depin">Frontier AI & DePIN Compute Index</option>
+              <option value="vault-robinhood-l2">Robinhood Ecosystem L2 Matrix (ARB / LINK / ETH)</option>
+            </select>
+          </div>
+
+          <!-- Timeframe Pills -->
+          <div class="control-group">
+            <div class="control-header">
+              <span class="control-label">Backtest Horizon</span>
+            </div>
+            <div class="pill-grid pill-grid-4">
+              <button class="pill-btn timeframe-pill" data-timeframe="3M">3M</button>
+              <button class="pill-btn timeframe-pill" data-timeframe="6M">6M</button>
+              <button class="pill-btn timeframe-pill active" data-timeframe="1Y">1Y</button>
+              <button class="pill-btn timeframe-pill" data-timeframe="3Y">3Y</button>
+            </div>
+          </div>
+
+          <!-- DCA Frequency -->
+          <div class="control-group">
+            <div class="control-header">
+              <span class="control-label">DCA Frequency</span>
+            </div>
+            <div class="pill-grid">
+              <button class="pill-btn frequency-pill" data-freq="12h">Every 12h</button>
+              <button class="pill-btn frequency-pill active" data-freq="daily">Daily</button>
+              <button class="pill-btn frequency-pill" data-freq="weekly">Weekly</button>
+            </div>
+          </div>
+
+          <!-- Quick Action -->
+          <button class="btn-primary deposit-vault-trigger" data-vault-id="vault-prime-bluechip" style="width: 100%; margin-top: 10px;">
+            Deploy This Allocation
+          </button>
+        </div>
+
+        <!-- Chart Column -->
+        <div class="glass-panel simulator-display reveal-on-scroll">
+          <div class="chart-header">
+            <div style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; color: var(--text-pure);">
+              Portfolio Growth & Mean-Reversion Harvest
+            </div>
+            <div class="chart-legend">
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #00D95A; box-shadow: 0 0 8px rgba(0, 217, 90, 0.6);"></span>
+                <span>Orbital DCA + Rebalance</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #94A3B8;"></span>
+                <span>Lump Sum</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background: #3B82F6;"></span>
+                <span>Raw HODL</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Canvas Interactive Chart -->
+          <div class="chart-canvas-wrap">
+            <canvas id="dca-chart-canvas"></canvas>
+          </div>
+
+          <!-- Summary Metric Row -->
+          <div class="simulator-summary-bar">
+            <div class="sim-metric">
+              <span class="sim-metric-label">Projected Portfolio Value</span>
+              <span class="sim-metric-val text-green" id="sim-metric-est-val">$16,560</span>
+            </div>
+            <div class="sim-metric">
+              <span class="sim-metric-label">Estimated Alpha Gain</span>
+              <span class="sim-metric-val text-green" id="sim-metric-profit">+$4,560 (+38.0%)</span>
+            </div>
+            <div class="sim-metric">
+              <span class="sim-metric-label">Robinhood Chain Gas Saved</span>
+              <span class="sim-metric-val text-blue" id="sim-metric-gas-saved">~$720.00 (0-Gas RH Orbit)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       5. CURATED VAULTS SECTION
+       ========================================================================= -->
+  <section class="section-pad" id="vaults" style="background: rgba(7, 10, 15, 0.45);">
+    <div class="container">
+      <div class="section-head reveal-on-scroll">
+        <div class="section-eyebrow">
+          <span class="badge-pill green">Live Vault Strategies</span>
+        </div>
+        <h2 class="section-title">Automated Baskets. <span class="text-gradient-green">Zero Stress.</span></h2>
+        <p class="section-desc">
+          Choose from pre-audited, risk-optimized vault architectures running autonomously on Robinhood Chain smart contracts.
+        </p>
+      </div>
+
+      <!-- Vaults Grid rendered dynamically via vaults-data.js & app.js -->
+      <div class="vaults-grid" id="vaults-grid">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       6. $ORBIT TOKENOMICS & ZERO-FEE STAKING LADDER
+       ========================================================================= -->
+  <section class="section-pad" id="tokenomics">
+    <div class="container">
+      <div class="section-head reveal-on-scroll">
+        <div class="section-eyebrow">
+          <span class="badge-pill green">Token Utility & Yield Boost</span>
+        </div>
+        <h2 class="section-title">Stake $ORBIT. <span class="text-gradient-green">Eliminate All Fees.</span></h2>
+        <p class="section-desc">
+          Hold and stake $ORBIT tokens on Robinhood Chain to unlock tiered fee reductions all the way down to 0.00% Zero-Fee execution, plus boosted yield multipliers.
+        </p>
+      </div>
+
+      <!-- Tier Cards Grid -->
+      <div class="tiers-ladder-grid" id="tiers-ladder-grid">
+        <!-- Injected dynamically via JS -->
+      </div>
+
+      <!-- Dynamic Fee Calculator Panel -->
+      <div class="glass-panel tier-calculator-panel reveal-on-scroll">
+        <div>
+          <span class="badge-pill green" style="margin-bottom: 12px;"><span class="pulse-dot"></span> Interactive Staking Matrix</span>
+          <h3 style="margin-bottom: 10px;">Calculate Your Annual Fee Savings</h3>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">
+            Slide your target $ORBIT staking amount to calculate your effective fee reduction and projected annual wealth retention on Robinhood Chain.
+          </p>
+
+          <div class="control-group">
+            <div class="control-header">
+              <span class="control-label">Your Staked $ORBIT</span>
+              <span class="control-val text-green" id="stake-calc-amount">10,000 $ORBIT</span>
+            </div>
+            <input type="range" id="stake-calc-slider" class="slider-input" min="0" max="60000" step="1000" value="10000">
+            <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);">
+              <span>0 (Explorer)</span>
+              <span>10k (Architect)</span>
+              <span>50k+ (Zero-Fee Whale)</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 16px; padding: 24px; border-radius: var(--radius-md); background: rgba(3,5,8,0.7); border: 1px solid var(--border-subtle);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.82rem; color: var(--text-dim); font-family: var(--font-mono);">UNLOCKED TIER</span>
+            <span style="font-size: 1.05rem; font-family: var(--font-heading); font-weight: 700; color: var(--rh-green);" id="stake-calc-tier-name">Architect (Tier 2)</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.82rem; color: var(--text-dim); font-family: var(--font-mono);">EFFECTIVE FEE</span>
+            <span style="font-size: 1.4rem; font-family: var(--font-mono); font-weight: 800; color: var(--text-pure);" id="stake-calc-fee-rate">0.08%</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid var(--border-subtle);">
+            <span style="font-size: 0.82rem; color: var(--text-dim); font-family: var(--font-mono);">ESTIMATED ANNUAL SAVINGS</span>
+            <span style="font-size: 1.4rem; font-family: var(--font-mono); font-weight: 800; color: var(--rh-green);" id="stake-calc-savings">+$1,174 / yr</span>
+          </div>
+          <button class="btn-primary" style="margin-top: 8px;">
+            Stake $ORBIT on Robinhood Chain
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       7. ROBINHOOD CHAIN INFRASTRUCTURE & SECURITY
+       ========================================================================= -->
+  <section class="section-pad" id="infrastructure" style="background: rgba(7, 10, 15, 0.45);">
+    <div class="container">
+      <div class="section-head reveal-on-scroll">
+        <div class="section-eyebrow">
+          <span class="badge-pill green"><span class="pulse-dot"></span> Layer-2 Architecture</span>
+        </div>
+        <h2 class="section-title">Built Exclusively For <span class="text-green">Robinhood Chain</span></h2>
+        <p class="section-desc">
+          Powered by Arbitrum Orbit execution, sub-second micro-blocks, and zero-gas relayer batch auctions.
+        </p>
+      </div>
+
+      <div class="arch-grid">
+        <div class="glass-panel arch-card reveal-on-scroll">
+          <div class="arch-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+          </div>
+          <h4>Arbitrum Orbit Rollup Settlement</h4>
+          <p>
+            Orbital Vault executes all portfolio rebalancing micro-swaps on Robinhood Chain with sub-cent gas fees and instant cryptographic finality.
+          </p>
+        </div>
+
+        <div class="glass-panel arch-card reveal-on-scroll">
+          <div class="arch-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <h4>Non-Custodial Smart Contracts</h4>
+          <p>
+            Your assets never leave verified ERC-4626 vault contracts. You retain 100% custody, with instant permissionless withdrawals at any second.
+          </p>
+        </div>
+
+        <div class="glass-panel arch-card reveal-on-scroll">
+          <div class="arch-icon" style="color: var(--accent-lapis); border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.06);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          </div>
+          <h4>Pyth & Chainlink Low-Latency Oracles</h4>
+          <p>
+            Rebalance triggers rely on sub-second Pyth network price updates, guarding against MEV frontrunning and sandwich attacks.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       8. FOOTER
+       ========================================================================= -->
+  <footer style="padding: 80px 0 40px; border-top: 1px solid var(--border-subtle); position: relative; z-index: 10; background: var(--bg-void);">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 40px; margin-bottom: 60px;">
+        <div style="max-width: 360px;">
+          <a href="#" class="brand-logo" style="margin-bottom: 16px;">
+            <div class="logo-symbol">
+              <svg viewBox="0 0 24 24">
+                <polygon points="12 2 2 12 12 22 22 12"></polygon>
+                <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-30 12 12)"></ellipse>
+              </svg>
+            </div>
+            <span class="logo-text">ORBITAL<span>.VAULT</span></span>
+          </a>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;">
+            The non-custodial auto-DCA and dynamic portfolio rebalancing platform engineered for the Robinhood Chain ecosystem.
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 60px; flex-wrap: wrap;">
+          <div>
+            <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--rh-green); text-transform: uppercase; margin-bottom: 16px; letter-spacing: 0.05em;">Protocol</div>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem;">
+              <li><a href="#simulator" style="color: var(--text-muted); text-decoration: none;">Strategy Engine</a></li>
+              <li><a href="#vaults" style="color: var(--text-muted); text-decoration: none;">Curated Vaults</a></li>
+              <li><a href="#tokenomics" style="color: var(--text-muted); text-decoration: none;">$ORBIT Staking</a></li>
+              <li><a href="#infrastructure" style="color: var(--text-muted); text-decoration: none;">Robinhood Orbit L2</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--rh-green); text-transform: uppercase; margin-bottom: 16px; letter-spacing: 0.05em;">Security</div>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem;">
+              <li><a href="#" style="color: var(--text-muted); text-decoration: none;">Audit Reports (CertiK / OpenZeppelin)</a></li>
+              <li><a href="#" style="color: var(--text-muted); text-decoration: none;">Bug Bounty Program</a></li>
+              <li><a href="#" style="color: var(--text-muted); text-decoration: none;">Open-Source Contracts</a></li>
+              <li><a href="#" style="color: var(--text-muted); text-decoration: none;">Chainlink Oracles</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 24px; font-size: 0.78rem; color: var(--text-dim); font-family: var(--font-mono); flex-wrap: wrap; gap: 16px;">
+        <div>© 2026 Orbital Vault Protocol. Robinhood Chain Native.</div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="pulse-dot" style="background: var(--rh-green); box-shadow: 0 0 8px var(--rh-green);"></span>
+          <span>Robinhood Chain RPC: 100% Operational (Latency: 38ms)</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       MODAL 1: WALLET CONNECTION MODAL
+       ========================================================================= -->
+  <div id="wallet-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="wallet-modal-close">✕</button>
+      <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--rh-green); margin-bottom: 6px; letter-spacing: 0.04em;">WEB3 INTERFACE</div>
+      <h3 style="margin-bottom: 8px;">Connect to Robinhood Chain</h3>
+      <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 20px;">
+        Choose your preferred EVM wallet to access automated DCA vaults.
+      </p>
+
+      <div class="wallets-list">
+        <div class="wallet-option-item" data-wallet="Robinhood Wallet">
+          <div class="wallet-option-left">
+            <div class="wallet-icon-box" style="background: rgba(0, 217, 90, 0.12); color: #00D95A; font-weight: 800;">RH</div>
+            <div>
+              <div style="font-weight: 600; font-size: 0.92rem;">Robinhood Wallet</div>
+              <div style="font-size: 0.75rem; color: var(--rh-green);">Native 0-Gas Integration</div>
+            </div>
+          </div>
+          <span class="badge-pill green" style="font-size: 0.68rem;">Recommended</span>
+        </div>
+
+        <div class="wallet-option-item" data-wallet="MetaMask">
+          <div class="wallet-option-left">
+            <div class="wallet-icon-box" style="background: rgba(246, 133, 27, 0.12); color: #F6851B; font-weight: 800;">🦊</div>
+            <div>
+              <div style="font-weight: 600; font-size: 0.92rem;">MetaMask</div>
+              <div style="font-size: 0.75rem; color: var(--text-dim);">EVM Injected Extension</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wallet-option-item" data-wallet="Rabby Wallet">
+          <div class="wallet-option-left">
+            <div class="wallet-icon-box" style="background: rgba(99, 102, 241, 0.12); color: #6366F1; font-weight: 800;">🐰</div>
+            <div>
+              <div style="font-weight: 600; font-size: 0.92rem;">Rabby Wallet</div>
+              <div style="font-size: 0.75rem; color: var(--text-dim);">Multi-Chain Orbit Optimized</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wallet-option-item" data-wallet="Coinbase Wallet">
+          <div class="wallet-option-left">
+            <div class="wallet-icon-box" style="background: rgba(59, 130, 246, 0.12); color: #3B82F6; font-weight: 800;">🔵</div>
+            <div>
+              <div style="font-weight: 600; font-size: 0.92rem;">Coinbase Wallet / Smart Wallet</div>
+              <div style="font-size: 0.75rem; color: var(--text-dim);">Passkey & MPC Support</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size: 0.74rem; color: var(--text-dim); text-align: center; font-family: var(--font-mono);">
+        By connecting, you agree to Orbital Vault's non-custodial terms on Robinhood Chain (#77701).
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 2: DEPOSIT & STRATEGY AUTOMATION MODAL
+       ========================================================================= -->
+  <div id="deposit-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="deposit-modal-close">✕</button>
+      <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--rh-green); margin-bottom: 6px; letter-spacing: 0.04em;">EXECUTE AUTOMATION</div>
+      <h3 id="modal-deposit-vault-title" style="margin-bottom: 6px;">Robinhood Prime Bluechip</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">
+        Deposit once. The contract will automatically execute micro-DCA orders and mean-reversion rebalancing.
+      </p>
+
+      <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px;">
+        <div>
+          <label style="font-size: 0.76rem; font-family: var(--font-mono); color: var(--text-dim); text-transform: uppercase;">Deposit Collateral (Robinhood Chain)</label>
+          <div style="display: flex; align-items: center; background: rgba(3,5,8,0.8); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 8px 14px; margin-top: 6px;">
+            <input type="number" id="modal-deposit-amount" value="1000" style="flex: 1; background: transparent; border: none; color: var(--text-pure); font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700; outline: none;">
+            <span class="badge-pill green" style="font-size: 0.75rem;">USDC</span>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div style="padding: 12px; border-radius: var(--radius-sm); background: rgba(3,5,8,0.6); border: 1px solid var(--border-subtle);">
+            <div style="font-size: 0.7rem; color: var(--text-dim); font-family: var(--font-mono);">DCA INTERVAL</div>
+            <div style="font-size: 0.92rem; font-family: var(--font-mono); font-weight: 700; color: var(--rh-green); margin-top: 2px;">Daily (Every 24h)</div>
+          </div>
+          <div style="padding: 12px; border-radius: var(--radius-sm); background: rgba(3,5,8,0.6); border: 1px solid var(--border-subtle);">
+            <div style="font-size: 0.7rem; color: var(--text-dim); font-family: var(--font-mono);">EST. GAS PER BATCH</div>
+            <div style="font-size: 0.92rem; font-family: var(--font-mono); font-weight: 700; color: var(--rh-green); margin-top: 2px;">$0.0004 (Sponsored)</div>
+          </div>
+        </div>
+      </div>
+
+      <button id="confirm-deposit-btn" class="btn-primary" style="width: 100%;">
+        Confirm & Deploy Automated Vault
+      </button>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/vaults-data.js"></script>
+  <script src="js/sound-engine.js"></script>
+  <script src="js/chart-engine.js"></script>
+  <script src="js/webgl-scene.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
